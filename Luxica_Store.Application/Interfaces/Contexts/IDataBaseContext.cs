@@ -13,12 +13,11 @@ namespace Luxica_Store.Application.Interfaces.Contexts
     {
         DbSet<User> Users { get; set; }
         DbSet<Role> Roles { get; set; }
-        DbSet<UserInRole> UserRoles { get; set; }
+        DbSet<UserInRole> UserInRoles { get; set; }
 
-        //int SaveChanges(bool acceptAllChangesOnSuccess);
-        //int SaveChanges();
-        //Task<int> SaveChangesAsyn(bool acceptAllChangesOnSuccess, CancellationToken cancelationToken = new CancellationToken());
-        //Task<int> SaveChangesAsyn(CancellationToken cancelationToken = new CancellationToken());
-
+        int SaveChanges(bool acceptAllChangesOnSuccess);
+        int SaveChanges();
+        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

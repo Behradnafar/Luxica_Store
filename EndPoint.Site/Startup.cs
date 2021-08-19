@@ -1,4 +1,10 @@
 using Luxica_Store.Application.Interfaces.Contexts;
+using Luxica_Store.Application.Services.Users.Command.EditUser;
+using Luxica_Store.Application.Services.Users.Command.RegisterUser;
+using Luxica_Store.Application.Services.Users.Command.RemoveUser;
+using Luxica_Store.Application.Services.Users.Command.UserStatusChange;
+using Luxica_Store.Application.Services.Users.Queries.GetRoles;
+using Luxica_Store.Application.Services.Users.Queries.GetUsers;
 using Luxica_Store.Persistence.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,8 +33,15 @@ namespace EndPoint.Site
         public void ConfigureServices(IServiceCollection services)
         {
             //Register Dependency
-            services.AddScoped<IDataBaseContext,DataBaseContext>();
+            services.AddScoped<IDataBaseContext, DataBaseContext>();
+            services.AddScoped<IGetUsersService, GetUsersService>();
+            services.AddScoped<IGetRolesService, GetRolesService>();
+            services.AddScoped<IRegisterUserService, RegisterUserService>();
+            services.AddScoped<IRemoveUserService, RemoveUserService>();
+            services.AddScoped<IUserSatusChangeService, UserSatusChangeService>();
+            services.AddScoped<IEditUserService, EditUserService>();
 
+            
 
             //Should be in appSeting =>
             string connectionString = @"Data Source=.\MSSQLSERVER01; Initial Catalog=Luxica_StoreDb; Integrated Security=true;";

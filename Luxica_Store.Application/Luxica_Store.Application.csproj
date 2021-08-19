@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Luxica_Store.Common\Luxica_Store.Common.csproj" />
     <ProjectReference Include="..\Luxica_Store.Domain\Luxica_Store.Domain.csproj" />
   </ItemGroup>
 
