@@ -2,10 +2,12 @@ using Luxica_Store.Application.Interfaces.Contexts;
 using Luxica_Store.Application.Services.Users.Command.EditUser;
 using Luxica_Store.Application.Services.Users.Command.RegisterUser;
 using Luxica_Store.Application.Services.Users.Command.RemoveUser;
+using Luxica_Store.Application.Services.Users.Command.UserLogin;
 using Luxica_Store.Application.Services.Users.Command.UserStatusChange;
 using Luxica_Store.Application.Services.Users.Queries.GetRoles;
 using Luxica_Store.Application.Services.Users.Queries.GetUsers;
 using Luxica_Store.Persistence.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,21 +34,35 @@ namespace EndPoint.Site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie( options =>
+            {
+                options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/");
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5.0);
+            });
+
+
             //Register Dependency
             services.AddScoped<IDataBaseContext, DataBaseContext>();
             services.AddScoped<IGetUsersService, GetUsersService>();
             services.AddScoped<IGetRolesService, GetRolesService>();
             services.AddScoped<IRegisterUserService, RegisterUserService>();
             services.AddScoped<IRemoveUserService, RemoveUserService>();
+            services.AddScoped<IUserLoginService, UserLoginService>();
             services.AddScoped<IUserSatusChangeService, UserSatusChangeService>();
             services.AddScoped<IEditUserService, EditUserService>();
 
-            
+
 
             //Should be in appSeting =>
             string connectionString = @"Data Source=.\MSSQLSERVER01; Initial Catalog=Luxica_StoreDb; Integrated Security=true;";
             services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connectionString));
-             
+
 
             services.AddControllersWithViews();
         }
@@ -70,6 +86,7 @@ namespace EndPoint.Site
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
