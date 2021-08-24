@@ -13,4 +13,9 @@
     <ProjectReference Include="..\Luxica_Store.Domain\Luxica_Store.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Products\FacadPattern\" />
+    <Folder Include="Services\Products\Queries\" />
+  </ItemGroup>
+
 </Project>

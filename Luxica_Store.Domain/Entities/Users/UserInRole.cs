@@ -1,6 +1,8 @@
-﻿namespace Luxica_Store.Domain.Entities.Users
+﻿using Luxica_Store.Domain.Entities.Common;
+
+namespace Luxica_Store.Domain.Entities.Users
 {
-    public class UserInRole
+    public class UserInRole : BaseEntity
     {
         //Many to Many Relations
         public long Id { get; set; }
